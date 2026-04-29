@@ -13,7 +13,7 @@ test('Get All Products', async ({ request }) => {
 });
 
 
-test.only('POST To All Products - Method Not Allowed', async ({ request }) => {
+test('POST To All Products - Method Not Allowed', async ({ request }) => {
     const response = await request.post('https://automationexercise.com/api/productsList');
     
     expect(response.status()).toBe(200);
