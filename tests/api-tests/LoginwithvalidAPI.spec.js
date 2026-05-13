@@ -7,9 +7,9 @@ test('POST Verify Login', async ({ request }) => {
             password: 'Langa@24'
         }
     });
-    
+
     expect(response.status()).toBe(200);
-    
+
     const body = await response.json();
     expect(body.responseCode).toBe(200);
     expect(body.message).toBe('User exists!');
@@ -18,13 +18,11 @@ test('POST Verify Login', async ({ request }) => {
 
 test('POST Verify Login Missing Parameters', async ({ request }) => {
     const response = await request.post('https://automationexercise.com/api/verifyLogin');
-    
+
     expect(response.status()).toBe(200);
-    
+
     const body = await response.json();
     expect(body.responseCode).toBe(400);
     expect(body.message).toBe('Bad request, email or password parameter is missing in POST request.');
     console.log(body);
 });
-    
-
