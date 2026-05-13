@@ -3,6 +3,14 @@ import { request } from '@playwright/test';
 async function globalSetup() {
     const context = await request.newContext();
 
+    // Delete first in case it already exists, then recreate
+    await context.delete('https://automationexercise.com/api/deleteAccount', {
+        form: {
+            email: 'jacobmotsweni18@gmail.com',
+            password: 'Langa@24'
+        }
+    });
+
     await context.post('https://automationexercise.com/api/createAccount', {
         form: {
             name: 'Jacob Motsweni',
@@ -29,4 +37,3 @@ async function globalSetup() {
 }
 
 export default globalSetup;
-
