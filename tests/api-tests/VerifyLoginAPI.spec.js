@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-test('DELETE Existing User Account', async ({ request }) => {
-    const uniqueEmail = `deleteuser_${Date.now()}@example.com`;
+test('POST Verify Login with Valid Credentials', async ({ request }) => {
+    const uniqueEmail = `verifylogin_${Date.now()}@example.com`;
 
     // Create account first
     const createResponse = await request.post('https://automationexercise.com/api/createAccount', {
@@ -29,20 +29,29 @@ test('DELETE Existing User Account', async ({ request }) => {
     const createBody = await createResponse.json();
     expect(createBody.responseCode).toBe(201);
 
-    // Now delete the account
-    const deleteResponse = await request.delete('https://automationexercise.com/api/deleteAccount', {
+    // Now verify login
+    const response = await request.post('https://automationexercise.com/api/verifyLogin', {
         form: {
             email: uniqueEmail,
             password: 'Password123'
         }
     });
 
-    expect(deleteResponse.status()).toBe(200);
+    expect(response.status()).toBe(200);
 
-    const deleteBody = await deleteResponse.json();
-    console.log(deleteBody);
-
-    expect(deleteBody.responseCode).toBe(200);
-    expect(deleteBody.message).toBe('Account deleted!');
+    const body = await response.json();
+    expect(body.responseCode).toBe(200);
+    expect(body.message).toBe('User exists!');
+    console.log(body);
 });
 
+test('POST Verify Login Missing Parameters', async ({ request }) => {
+    const response = await request.post('https://automationexercise.com/api/verifyLogin');
+
+    expect(response.status()).toBe(200);
+
+    const body = await response.json();
+    expect(body.responseCode).toBe(400);
+    expect(body.message).toBe('Bad request, email or password parameter is missing in POST request.');
+    console.log(body);
+});
