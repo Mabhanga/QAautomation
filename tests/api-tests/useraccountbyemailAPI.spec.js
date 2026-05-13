@@ -53,3 +53,4 @@ test('GET User Account Detail By Email', async ({ request }) => {
     // API returns user object inside response.user
     expect(body.user.email).toBe(uniqueEmail);
 });
+
