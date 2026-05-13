@@ -17,6 +17,12 @@ jobs:
       run: npm install
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Create test account
+      run: |
+        curl -X DELETE "https://automationexercise.com/api/deleteAccount" \
+          -d "email=jacobmotsweni18@gmail.com&password=Langa@24"
+        curl -X POST "https://automationexercise.com/api/createAccount" \
+          -d "name=Jacob Motsweni&email=jacobmotsweni18@gmail.com&password=Langa@24&title=Mr&birth_date=5&birth_month=June&birth_year=1993&firstname=Jacob&lastname=Motsweni&company=Test Company&address1=123 Main Street&address2=Apartment 1&country=South Africa&zipcode=2000&state=Gauteng&city=Johannesburg&mobile_number=0649546712"
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v4
