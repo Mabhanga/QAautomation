@@ -45,4 +45,3 @@ test('DELETE Existing User Account', async ({ request }) => {
     expect(deleteBody.responseCode).toBe(200);
     expect(deleteBody.message).toBe('Account deleted!');
 });
-
